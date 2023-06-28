@@ -31,16 +31,13 @@ const Task = ({ data, onDelete, refreshFun }) => {
     try {
       const response = await axios.put(
         `http://localhost:8080/tasks/update/${data._id}`,
-        {
-          updatedTask,
-        }
+        updatedTask
       );
       refreshFun();
       console.log(response);
     } catch (error) {
-      console.error("An error occurred while updating the task:", error);
+      console.log(error);
     }
-
     setIsOpen(false);
   };
 

@@ -1,13 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import TaskForm from "../Components/TaskForm";
+
 import { AllTask } from "../pages/AllTask";
+import CreateTask from "../pages/CreateTask";
 
 const MainRoutes = () => {
   return (
     <div>
       <Routes>
         <Route path="/" element={<AllTask />}></Route>
-        <Route path="/createtask" element={<TaskForm />}></Route>
+        <Route path="/createtask" element={<CreateTask />}></Route>
       </Routes>
     </div>
   );
