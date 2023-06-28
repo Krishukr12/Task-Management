@@ -1,15 +1,21 @@
+/* eslint-disable react/prop-types */
 import "../Single Task/Task.css";
 
-const Task = ({ title, dueDate, completed, onComplete, onDelete }) => {
-  const complted = false;
+const Task = ({ data, onDelete }) => {
+  function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString();
+    return `${formattedDate} `;
+  }
+
   return (
     <div className="task">
-      <h3 className="task-title">Krishan</h3>
-      <p className="task-due">Due Date: 22/03/2023</p>
-      <button className="task-complete" onClick={onComplete}>
-        {completed ? "Completed" : "Mark as Completed"}
+      <h3 className="task-title">{data.title}</h3>
+      <p className="task-due">Due Date: {formatDateTime(data.dueDate)}</p>
+      <button className="task-complete">
+        {data.completed ? "Completed" : "Mark as Completed"}
       </button>
-      <button className="task-delete" onClick={onDelete}>
+      <button className="task-delete" onClick={() => onDelete(data._id)}>
         Delete Task
       </button>
     </div>
