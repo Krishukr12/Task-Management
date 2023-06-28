@@ -2,6 +2,7 @@
 const express = require("express");
 const connection = require("./config/db");
 const createError = require("./utils/createError.js");
+const { taskRouter } = require("./routes/task.route");
 
 const app = express();
 
@@ -9,8 +10,11 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("You are good to go");
+  res.send("Hi Welcome to HomePage");
 });
+
+
+app.use("/tasks", taskRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
