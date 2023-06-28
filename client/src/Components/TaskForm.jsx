@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./TaskForm.css";
+import axios from "axios";
 
-const TaskForm = ({ addTask }) => {
+const TaskForm = () => {
   const [task, setTask] = useState({});
   const [error, setError] = useState("");
 
@@ -12,17 +13,30 @@ const TaskForm = ({ addTask }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!task.title || !task.dueDate) {
       setError("Title and due date are required");
       return;
     }
 
-    addTask(task);
-    setTask({});
-    setError("");
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/tasks/create",
+        task
+      );
+      if (response.data.success) {
+        alert("Task created successfully");
+        setTask({
+          name: "",
+          description: "",
+          dueDate: "",
+        });
+        setError("");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -30,10 +44,9 @@ const TaskForm = ({ addTask }) => {
       <h2>Add New Task</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="title">Title:</label>
+          <label>Title:</label>
           <input
             type="text"
-            id="title"
             name="title"
             value={task.title}
             onChange={handleChange}
@@ -41,9 +54,8 @@ const TaskForm = ({ addTask }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="description">Description:</label>
+          <label>Description:</label>
           <textarea
-            id="description"
             name="description"
             value={task.description}
             onChange={handleChange}
@@ -51,10 +63,9 @@ const TaskForm = ({ addTask }) => {
           ></textarea>
         </div>
         <div className="form-group">
-          <label htmlFor="dueDate">Due Date:</label>
+          <label>Due Date:</label>
           <input
             type="date"
-            id="dueDate"
             name="dueDate"
             value={task.dueDate}
             onChange={handleChange}
