@@ -1,6 +1,3 @@
-Sure! I'd be happy to help you write a README file for your MERN stack task management project. Here's an example README file you can use as a starting point:
-
----
 
 # Task Management Project
 
