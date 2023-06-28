@@ -1,6 +1,6 @@
 const { TaskModel } = require("../models/Task.model");
 const { createError } = require("../utils/createError");
-
+// Crate Task
 const createTask = async (req, res, next) => {
   try {
     const newTask = new TaskModel(req.body);
@@ -15,6 +15,7 @@ const createTask = async (req, res, next) => {
   }
 };
 
+//Update Task
 const updateTask = async (req, res, next) => {
   try {
     const taskId = req.params.id;
@@ -37,6 +38,7 @@ const updateTask = async (req, res, next) => {
   }
 };
 
+// get all tasks
 const getAllTasks = async (req, res, next) => {
   try {
     const allTasks = await TaskModel.find();
@@ -46,6 +48,7 @@ const getAllTasks = async (req, res, next) => {
   }
 };
 
+// get particular task
 const getTask = async (req, res, next) => {
   try {
     const taskId = req.params.id;
@@ -62,6 +65,7 @@ const getTask = async (req, res, next) => {
   }
 };
 
+// Delete task
 const deleteTask = async (req, res, next) => {
   try {
     const taskId = req.params.id;
