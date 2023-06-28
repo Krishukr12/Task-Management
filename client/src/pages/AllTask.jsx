@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import Task from "../Components/Single Task/Task";
 import axios from "axios";
-
+import "../index.css";
 export const AllTask = () => {
   const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Data Fetch function
   const fetchTasks = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get("http://localhost:8080/tasks");
       setTasks(response.data.tasks);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
@@ -30,16 +33,10 @@ export const AllTask = () => {
   };
 
   return (
-    <div
-      style={{
-        width: "75%",
-        margin: "auto",
-        display: "grid",
-        gridTemplateColumns: "repeat(3,1fr)",
-        marginTop: "20px",
-      }}
-    >
-      {tasks.length > 0 ? (
+    <div className="task-container">
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : tasks.length > 0 ? (
         tasks.map((item) => {
           return (
             <Task

@@ -5,3 +5,11 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
+.task-container {
+  width: 75%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 20px;
+}

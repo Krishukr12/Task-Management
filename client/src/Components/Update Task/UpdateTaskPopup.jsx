@@ -5,6 +5,7 @@ import "./UpdateTaskPopup.css";
 const UpdateTaskPopup = ({ task, onUpdate, onCancel }) => {
   const [updatedTask, setUpdatedTask] = useState({ ...task });
   const [error, setError] = useState("");
+  const today = new Date().toISOString().split("T")[0];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +56,7 @@ const UpdateTaskPopup = ({ task, onUpdate, onCancel }) => {
               type="date"
               id="dueDate"
               name="dueDate"
+              min={today}
               value={updatedTask.dueDate}
               onChange={handleChange}
             />

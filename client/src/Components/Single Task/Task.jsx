@@ -6,7 +6,7 @@ import UpdateTaskPopup from "../Update Task/UpdateTaskPopup";
 const Task = ({ data, onDelete, refreshFun }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // For date formatting
+  // For date formatting function
   function formatDateTime(dateString) {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString();
@@ -26,6 +26,8 @@ const Task = ({ data, onDelete, refreshFun }) => {
       console.error("Error:", error);
     }
   };
+
+  //update handler function
 
   const handleUpdate = async (updatedTask) => {
     try {
