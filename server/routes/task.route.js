@@ -15,6 +15,9 @@ taskRouter.post("/create", createTask);
 //Get all tasks controller
 taskRouter.get("/", getAllTasks);
 
+//Get particular task controller
+taskRouter.get("/:id", getTask);
+
 //Update tasks controller
 taskRouter.put("/update/:id", updateTask);
 
