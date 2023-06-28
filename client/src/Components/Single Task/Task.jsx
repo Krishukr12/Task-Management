@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
 import "../Single Task/Task.css";
-
+import { useState } from "react";
+import UpdateTaskPopup from "../Update Task/UpdateTaskPopup";
 const Task = ({ data, onDelete, refreshFun }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   // For date formatting
   function formatDateTime(dateString) {
     const date = new Date(dateString);
@@ -24,6 +27,23 @@ const Task = ({ data, onDelete, refreshFun }) => {
     }
   };
 
+  const handleUpdate = async (updatedTask) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/tasks/update/${data._id}`,
+        {
+          updatedTask,
+        }
+      );
+      refreshFun();
+      console.log(response);
+    } catch (error) {
+      console.error("An error occurred while updating the task:", error);
+    }
+
+    setIsOpen(false);
+  };
+
   return (
     <div className="task">
       <h3 className="task-title">{data.title}</h3>
@@ -40,7 +60,15 @@ const Task = ({ data, onDelete, refreshFun }) => {
       <button className="task-delete" onClick={() => onDelete(data._id)}>
         Delete Task
       </button>
-      <button className="task-update">Update Task</button>
+      <button onClick={() => setIsOpen(true)} className="task-update">
+        Update Task
+      </button>
+      {isOpen ? (
+        <UpdateTaskPopup
+          onUpdate={handleUpdate}
+          onCancel={() => setIsOpen(false)}
+        />
+      ) : null}
     </div>
   );
 };
