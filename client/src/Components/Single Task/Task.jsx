@@ -2,7 +2,7 @@
 import axios from "axios";
 import "../Single Task/Task.css";
 
-const Task = ({ data, onDelete }) => {
+const Task = ({ data, onDelete, refreshFun }) => {
   function formatDateTime(dateString) {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString();
@@ -15,7 +15,7 @@ const Task = ({ data, onDelete }) => {
         `http://localhost:8080/tasks/updatestatus/${id}`
       );
       if (response.data.success) {
-        alert("changed successfully");
+        refreshFun();
       }
     } catch (error) {
       console.error("Error:", error);

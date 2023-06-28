@@ -5,16 +5,16 @@ import axios from "axios";
 export const AllTask = () => {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/tasks");
-        setTasks(response.data.tasks);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/tasks");
+      setTasks(response.data.tasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchTasks();
   }, []);
 
@@ -39,7 +39,14 @@ export const AllTask = () => {
     >
       {tasks.length > 0 ? (
         tasks.map((item) => {
-          return <Task onDelete={handleDelete} data={item} key={item._id} />;
+          return (
+            <Task
+              refreshFun={fetchTasks}
+              onDelete={handleDelete}
+              data={item}
+              key={item._id}
+            />
+          );
         })
       ) : (
         <h1>Not Task available</h1>
