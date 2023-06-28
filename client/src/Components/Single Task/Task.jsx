@@ -3,12 +3,14 @@ import axios from "axios";
 import "../Single Task/Task.css";
 
 const Task = ({ data, onDelete, refreshFun }) => {
+  // For date formatting
   function formatDateTime(dateString) {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString();
     return `${formattedDate} `;
   }
 
+  // For handle status changing
   const handleCompletionStatus = async (id) => {
     try {
       const response = await axios.patch(
@@ -27,7 +29,7 @@ const Task = ({ data, onDelete, refreshFun }) => {
       <h3 className="task-title">{data.title}</h3>
       <p className="task-due">Due Date: {formatDateTime(data.dueDate)}</p>
       <p className="task-due">
-        Status : {data.completed ? "Completed" : "Not Completed"}
+        Status : {data.completed ? "Completed" : "Uncompleted"}
       </p>
       <button
         onClick={() => handleCompletionStatus(data._id)}
@@ -38,6 +40,7 @@ const Task = ({ data, onDelete, refreshFun }) => {
       <button className="task-delete" onClick={() => onDelete(data._id)}>
         Delete Task
       </button>
+      <button className="task-update">Update Task</button>
     </div>
   );
 };

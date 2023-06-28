@@ -5,6 +5,7 @@ import axios from "axios";
 export const AllTask = () => {
   const [tasks, setTasks] = useState([]);
 
+  // Data Fetch function
   const fetchTasks = async () => {
     try {
       const response = await axios.get("http://localhost:8080/tasks");
@@ -18,6 +19,7 @@ export const AllTask = () => {
     fetchTasks();
   }, []);
 
+  // Delete handler
   const handleDelete = async (taskId) => {
     try {
       await axios.delete(`http://localhost:8080/tasks/delete/${taskId}`);

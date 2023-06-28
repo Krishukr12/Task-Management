@@ -5,7 +5,7 @@ import axios from "axios";
 const TaskForm = () => {
   const [task, setTask] = useState({});
   const [error, setError] = useState("");
-
+  const today = new Date().toISOString().split("T")[0];
   const handleChange = (e) => {
     setTask({
       ...task,
@@ -67,6 +67,7 @@ const TaskForm = () => {
           <input
             type="date"
             name="dueDate"
+            min={today} // Set min attribute to today's date
             value={task.dueDate}
             onChange={handleChange}
           />
