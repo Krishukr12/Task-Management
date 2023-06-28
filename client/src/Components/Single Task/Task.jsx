@@ -17,7 +17,7 @@ const Task = ({ data, onDelete, refreshFun }) => {
   const handleCompletionStatus = async (id) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/tasks/updatestatus/${id}`
+        `https://taskmanagement-ct0r.onrender.com/tasks/updatestatus/${id}`
       );
       if (response.data.success) {
         refreshFun();
@@ -32,7 +32,7 @@ const Task = ({ data, onDelete, refreshFun }) => {
   const handleUpdate = async (updatedTask) => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/tasks/update/${data._id}`,
+        `https://taskmanagement-ct0r.onrender.com/tasks/update/${data._id}`,
         updatedTask
       );
       refreshFun();

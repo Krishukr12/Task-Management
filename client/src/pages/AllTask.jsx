@@ -8,9 +8,10 @@ export const AllTask = () => {
 
   // Data Fetch function
   const fetchTasks = async () => {
-    setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:8080/tasks");
+      const response = await axios.get(
+        "https://taskmanagement-ct0r.onrender.com/tasks"
+      );
       setTasks(response.data.tasks);
       setIsLoading(false);
     } catch (error) {
@@ -19,13 +20,16 @@ export const AllTask = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchTasks();
   }, []);
 
   // Delete handler
   const handleDelete = async (taskId) => {
     try {
-      await axios.delete(`http://localhost:8080/tasks/delete/${taskId}`);
+      await axios.delete(
+        `https://taskmanagement-ct0r.onrender.com/tasks/delete/${taskId}`
+      );
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
     } catch (error) {
       console.error("Error deleting task:", error);
