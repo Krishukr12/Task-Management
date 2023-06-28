@@ -6,6 +6,7 @@ const {
   getAllTasks,
   getTask,
   deleteTask,
+  updateCompletionStatus,
 } = require("../controllers/tasksController.js");
 
 const taskRouter = Router();
@@ -24,6 +25,8 @@ taskRouter.put("/update/:id", updateTask);
 //Delete tasks controller
 taskRouter.delete("/delete/:id", deleteTask);
 
+//Update completion status controller
+taskRouter.patch("/updatestatus/:id", updateCompletionStatus);
 module.exports = {
   taskRouter,
 };

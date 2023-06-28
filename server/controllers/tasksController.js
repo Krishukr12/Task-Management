@@ -82,10 +82,32 @@ const deleteTask = async (req, res, next) => {
   }
 };
 
+//Update completion status
+const updateCompletionStatus = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const task = await TaskModel.findById(id);
+
+    if (!task) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
+    }
+    task.completed = !task.completed;
+    await task.save();
+    return res
+      .status(200)
+      .json({ success: true, message: "Task status updated successfully" });
+  } catch (error) {
+    return next(createError(500, "Failed to update task status"));
+  }
+};
 module.exports = {
   createTask,
   updateTask,
   getAllTasks,
   getTask,
   deleteTask,
+  updateCompletionStatus,
 };

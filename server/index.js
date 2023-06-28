@@ -1,18 +1,17 @@
 // All imports
 const express = require("express");
 const connection = require("./config/db");
-const createError = require("./utils/createError.js");
 const { taskRouter } = require("./routes/task.route");
-
+const cors = require("cors");
 const app = express();
 
 //Middleware
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hi Welcome to HomePage");
 });
-
 
 app.use("/tasks", taskRouter);
 
