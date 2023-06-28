@@ -46,12 +46,36 @@ const getAllTasks = async (req, res, next) => {
   }
 };
 
-const getTask = (req, res, next) => {
-  res.send("single task");
+const getTask = async (req, res, next) => {
+  try {
+    const taskId = req.params.id;
+    const task = await TaskModel.findById(taskId);
+    if (!task) {
+      return next(createError(404, "Task not found"));
+    }
+    res.status(200).json({ success: true, task });
+  } catch (error) {
+    console.error("Error retrieving task:", error);
+    return next(
+      createError(500, "An error occurred while retrieving the task")
+    );
+  }
 };
 
-const deleteTask = (req, res, next) => {
-  res.send("deleting task");
+const deleteTask = async (req, res, next) => {
+  try {
+    const taskId = req.params.id;
+    const deletedTask = await TaskModel.findByIdAndDelete(taskId);
+    if (!deletedTask) {
+      return next(createError(404, "Task not found"));
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "Task deleted successfully" });
+  } catch (error) {
+    return next(createError(500, "Error deleting task: "));
+  }
 };
 
 module.exports = {
