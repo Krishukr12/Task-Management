@@ -1,72 +1,71 @@
 import { useState } from "react";
 import "./TaskForm.css";
 
-const TaskForm = () => {
+const TaskForm = ({ addTask }) => {
   const [task, setTask] = useState({});
+  const [error, setError] = useState("");
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setTask((prevTask) => ({
-      ...prevTask,
-      [name]: value,
-    }));
+  const handleChange = (e) => {
+    setTask({
+      ...task,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Perform form validation here
+    if (!task.title || !task.dueDate) {
+      setError("Title and due date are required");
+      return;
+    }
 
-    // const newTask = {
-    //   ...task,
-    //   completed: false,
-    // };
-
-    // onAddTask(newTask);
-
-    // Reset the form fields after submitting
+    addTask(task);
     setTask({});
+    setError("");
   };
 
-  console.log(task);
   return (
-    <form className="task-form" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          value={task.title}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="description">Description</label>
-        <textarea
-          id="description"
-          name="description"
-          value={task.description}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="dueDate">Due Date</label>
-        <input
-          type="date"
-          id="dueDate"
-          name="dueDate"
-          value={task.dueDate}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <button type="submit" className="btn-submit">
-        Add Task
-      </button>
-    </form>
+    <div className="task-form-container">
+      <h2>Add New Task</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={task.title}
+            onChange={handleChange}
+            placeholder="Enter title"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={task.description}
+            onChange={handleChange}
+            placeholder="Enter description"
+          ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="dueDate">Due Date:</label>
+          <input
+            type="date"
+            id="dueDate"
+            name="dueDate"
+            value={task.dueDate}
+            onChange={handleChange}
+          />
+        </div>
+        {error && <p className="error">{error}</p>}
+        <button type="submit" className="btn-submit">
+          Add Task
+        </button>
+      </form>
+    </div>
   );
 };
 
